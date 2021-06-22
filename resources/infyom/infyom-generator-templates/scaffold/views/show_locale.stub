@@ -1,0 +1,20 @@
+@extends('layouts.app')
+@section('content')
+    <div class="card-header">
+        <h5>
+            @lang('models/$MODEL_NAME_PLURAL_CAMEL$.singular')
+        </h5>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                @include('$VIEW_PREFIX$$MODEL_NAME_PLURAL_SNAKE$.show_fields')
+            </div>
+        </div>
+    </div>
+    <div class="card-footer">
+        <a href="{{ route('$ROUTE_NAMED_PREFIX$$MODEL_NAME_PLURAL_CAMEL$.index') }}" class="btn btn-default">
+            @lang('crud.back')
+        </a>
+    </div>
+@endsection

@@ -1,0 +1,11 @@
+<!-- $FIELD_NAME_TITLE$ Field -->
+<div class="mb-3 m-form__group col-md-6">
+    {!! Form::label('$FIELD_NAME$', __('models/$MODEL_NAME_PLURAL_CAMEL$.fields.$FIELD_NAME$').':', ['class' => 'form-label']) !!}
+    {!! Form::date('$FIELD_NAME$', null, ['class' => 'datepicker-here form-control digits','id'=>'$FIELD_NAME$']) !!}
+</div>
+
+@push('scripts')
+    <script src="../assets/js/datepicker/date-time-picker/moment.min.js"></script>
+    <script src="../assets/js/datepicker/date-time-picker/tempusdominus-bootstrap-4.min.js"></script>
+    <script src="../assets/js/datepicker/date-time-picker/datetimepicker.custom.js"></script>
+@endpush

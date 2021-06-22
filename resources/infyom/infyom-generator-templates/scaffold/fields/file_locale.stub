@@ -1,0 +1,9 @@
+<!-- $FIELD_NAME_TITLE$ Field -->
+<div class="mb-3 row">
+        {!! Form::label('$FIELD_NAME$', __('models/$MODEL_NAME_PLURAL_CAMEL$.fields.$FIELD_NAME$').':', ['class' => 'col-sm-3 col-form-label']) !!}
+        <div class="col-sm-9">
+            {!! Form::file('$FIELD_NAME$', ['class' => 'form-control']) !!}
+        </div>
+</div>
+
+

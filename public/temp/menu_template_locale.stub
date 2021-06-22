@@ -1,0 +1,3 @@
+<li class="sidebar-list">
+    <label class="badge badge-success">2</label><a class="sidebar-link sidebar-title {{ Request::is('$ROUTE_PREFIX$$MODEL_NAME_PLURAL_CAMEL$*') ? 'active' : '' }}" href="{{ route('$ROUTE_NAMED_PREFIX$$MODEL_NAME_PLURAL_CAMEL$.index') }}"><i data-feather="home"></i><span class="lan-3">@lang('models/$MODEL_NAME_PLURAL_CAMEL$.plural')              </span></a>
+</li>

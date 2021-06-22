@@ -1,0 +1,18 @@
+@extends('layouts.app')
+@section('content')
+            <div class="card-header">
+                <h5>@lang('models/$MODEL_NAME_PLURAL_CAMEL$.plural')</h5>
+                <h1 class="pull-right">
+                    <a class="btn btn-primary pull-right" style="margin-top: -10px;margin-bottom: 5px"
+                       href="{{ route('$ROUTE_NAMED_PREFIX$$MODEL_NAME_PLURAL_CAMEL$.create') }}">@lang('crud.add_new')</a>
+                </h1>
+            </div>
+            <div class="card-body">
+            @include('flash::message')
+            @include('$VIEW_PREFIX$$MODEL_NAME_PLURAL_SNAKE$.table')
+            </div>
+            <div class="card-footer">
+                $PAGINATE$
+            </div>
+@endsection
+

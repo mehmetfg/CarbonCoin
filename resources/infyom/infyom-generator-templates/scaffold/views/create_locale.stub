@@ -1,0 +1,21 @@
+@extends('layouts.app')
+@section('content')
+    <div class="card-header">
+        <h5>
+            @lang('models/$MODEL_NAME_PLURAL_CAMEL$.singular')
+        </h5>
+    </div>
+    <div class="card-body">
+        <div class="row g-2">
+            <div class="col-md-12">
+                @include('adminlte-templates::common.errors')
+                {!! Form::open(['route' => '$ROUTE_NAMED_PREFIX$$MODEL_NAME_PLURAL_CAMEL$.store']) !!}
+                <div class="row">
+                @include('$VIEW_PREFIX$$MODEL_NAME_PLURAL_SNAKE$.fields')
+                </div>
+                {!! Form::close() !!}
+
+            </div>
+        </div>
+    </div>
+@endsection

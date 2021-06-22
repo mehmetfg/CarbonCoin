@@ -1,0 +1,9 @@
+<!-- 'bootstrap / Toggle Switch $FIELD_NAME_TITLE$ Field' -->
+<div class="mb-3 m-form__group">
+    <label class="switch">
+        {!! Form::checkbox('$FIELD_NAME$', 1, null,  ['data-bootstrap-switch']) !!}
+        <span class="switch-state"></span>
+        {!! Form::label('$FIELD_NAME$', __('models/$MODEL_NAME_PLURAL_CAMEL$.fields.$FIELD_NAME$').':', ['class' => 'form-label']) !!}
+    </label>
+</div>
+

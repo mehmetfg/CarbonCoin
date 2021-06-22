@@ -1,0 +1,18 @@
+@extends('layouts.app')
+@section('content')
+    <div class="card-header">
+        <h5>
+            @lang('models/$MODEL_NAME_PLURAL_CAMEL$.singular')
+        </h5>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                @include('adminlte-templates::common.errors')
+                {!! Form::model($$MODEL_NAME_CAMEL$, ['route' => ['$ROUTE_NAMED_PREFIX$$MODEL_NAME_PLURAL_CAMEL$.update', $$MODEL_NAME_CAMEL$->$PRIMARY_KEY_NAME$], 'method' => 'patch']) !!}
+                @include('$VIEW_PREFIX$$MODEL_NAME_PLURAL_SNAKE$.fields')
+                {!! Form::close() !!}
+            </div>
+        </div>
+    </div>
+@endsection
