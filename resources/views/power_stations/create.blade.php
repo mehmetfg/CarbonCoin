@@ -9,7 +9,7 @@
         <div class="row g-2">
             <div class="col-md-12">
                 @include('adminlte-templates::common.errors')
-                {!! Form::open(['route' => 'powerStations.store']) !!}
+                {!! Form::open(['route' => 'powerStations.store', 'files' => true]) !!}
                 <div class="row">
                 @include('power_stations.fields')
                 </div>

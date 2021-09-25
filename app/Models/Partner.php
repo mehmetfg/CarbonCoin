@@ -107,9 +107,13 @@ class Partner extends Model
      *
      * @var array
      */
+    public function setPasswordAttribute($password)
+    {
+        $this->attributes['password'] = bcrypt($password);
+    }
     public static $rules = [
 
-
+        'password' => 'required',
         'name' => 'required',
         'email' => 'required',
 

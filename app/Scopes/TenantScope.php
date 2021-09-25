@@ -21,8 +21,8 @@ class TenantScope implements \Illuminate\Database\Eloquent\Scope
     public function apply(Builder $builder, Model $model)
     {
 
-        if(! optional(auth_user())->isAdmin()) {
-            $builder->whereIn('dealer_id', get_user_dealer_ids());
+     if(! optional(auth_user())->isAdmin()) {
+           $builder->whereIn('dealer_id', get_user_dealer_ids());
         }
     }
 }

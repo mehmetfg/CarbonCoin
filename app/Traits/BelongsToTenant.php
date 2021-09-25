@@ -18,6 +18,7 @@ trait BelongsToTenant
 {
     protected static function booted()
     {
+
         static::addGlobalScope(new SortByIdDesc(new TenantScope()));
         static::creating(function ($model)
         {

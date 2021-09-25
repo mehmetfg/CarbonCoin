@@ -9,6 +9,8 @@ use App\Http\Requests\UpdateTransactionRequest;
 use App\Models\Transaction;
 use Flash;
 use App\Http\Controllers\AppBaseController;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Request;
 use Response;
 
 class TransactionController extends AppBaseController
@@ -44,6 +46,7 @@ class TransactionController extends AppBaseController
 
     public function store(CreateTransactionRequest $request)
     {
+
         $input = $request->all();
 
         /** @var Transaction $transaction */
@@ -53,14 +56,15 @@ class TransactionController extends AppBaseController
 
         return redirect(route('transactions.index'));
     }
-    public function storeJson(CreateTransactionRequest $request)
+    public function storeJson(\Illuminate\Http\Request $request)
     {
+
         $input = $request->all();
 
         /** @var Transaction $transaction */
-        $transaction = Transaction::create($input);
 
-        Flash::success(__('messages.saved', ['model' => __('models/transactions.singular')]));
+
+      //  Flash::success(__('messages.saved', ['model' => __('models/transactions.singular')]));
 
         return "başarılı";
     }

@@ -25,6 +25,7 @@ class PowerStationFactory extends Factory
             'dealer_id' => $this->faker->randomDigitNotNull,
         'vallet_id' => $this->faker->randomDigitNotNull,
         'name' => $this->faker->word,
+        'wallet_address' => $this->faker->word,
         'email' => $this->faker->word,
         'phone' => $this->faker->word,
         'country' => $this->faker->word,

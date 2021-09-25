@@ -27,13 +27,13 @@ use Spatie\Activitylog\Traits\LogsActivity;
 class Transaction extends Model
 {
     use SoftDeletes;
-    use BelongsToTenant;
+
     use HasFactory;
     use LogsActivity;
     use SortNameInDescOrder;
-    public $table = 'transactions';
 
-    protected $attributes=["vallet_id"=> 1, "date"=> '2021-01-01', 'dealer_id'=> 1];
+
+    protected $attributes=["date"=> '2021-01-01', 'dealer_id'=> 1];
     protected $dates = ['deleted_at'];
 
 
@@ -42,8 +42,10 @@ class Transaction extends Model
         return $this->belongsTo(Vallet::class);
     }
     public $fillable = [
+        'period',
+        'status',
+        'hash',
         'dealer_id',
-        'vallet_id',
         'type',
         'definition',
         'description',
@@ -60,12 +62,11 @@ class Transaction extends Model
     protected $casts = [
         'id' => 'integer',
         'dealer_id' => 'integer',
-        'vallet_id' => 'integer',
         'type' => 'integer',
         'definition' => 'string',
         'description' => 'string',
         'address' => 'string',
-        'quentity' => 'decimal:2',
+        'quentity' => 'decimal:6',
         'date' => 'datetime'
     ];
 

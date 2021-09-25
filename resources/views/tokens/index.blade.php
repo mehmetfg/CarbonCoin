@@ -12,7 +12,7 @@
             @include('tokens.table')
             </div>
             <div class="card-footer">
-
+                
             </div>
 @endsection
 

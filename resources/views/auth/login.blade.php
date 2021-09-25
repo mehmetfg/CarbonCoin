@@ -14,7 +14,7 @@
 
         <form method="POST" action="{{ route('login') }}">
             @csrf
-            <h4>Eğer Üye Değilseniz Aşağıdaki  <strong>"Kayıt Ol"</strong> Butonuna Tıklayın.</h4>
+            <h4>Eğer Üye Değilseniz Aşağıdaki adfas <strong>"Kayıt Ol"</strong> Butonuna Tıklayın.</h4>
             <div>
                 <x-jet-label for="email" value="{{ __('Email') }}" />
                 <x-jet-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
@@ -52,9 +52,9 @@
 
             </div>
         </form>
-        <a href="/other/transfer" style="background: #61a93e"  class="inline-flex items-center px-4 py-2 bg-blue-700 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-900 active:bg-gray-900 focus:outline-none focus:border-blue-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition float-left mt-5">
+{{--        <a href="/other/transfer" style="background: #61a93e"  class="inline-flex items-center px-4 py-2 bg-blue-700 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-900 active:bg-gray-900 focus:outline-none focus:border-blue-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition float-left mt-5">
             {{ __('Android Kullanıcıları İçin Giriş') }}
-        </a>
+        </a>--}}
 
     </x-jet-authentication-card>
 

@@ -43,13 +43,17 @@ class TokenDataTable extends DataTable
         return $this->builder()
             ->columns($this->getColumns())
             ->minifiedAjax()
-            ->addAction(['width' => '120px', 'printable' => false, 'title' => __('crud.action')])
+            ->addAction(['width' => 'auto', 'printable' => false, 'title' => __('crud.action')])
             ->parameters([
                 'dom'       => 'Bfrtip',
                 'stateSave' => true,
                 'order'     => [[0, 'desc']],
                 'buttons'   => [
-
+                    [
+                       'extend' => 'create',
+                       'className' => 'btn btn-default btn-sm no-corner',
+                       'text' => '<i class="fa fa-plus"></i> ' .__('auth.app.create').''
+                    ],
                     [
                        'extend' => 'export',
                        'className' => 'btn btn-default btn-sm no-corner',

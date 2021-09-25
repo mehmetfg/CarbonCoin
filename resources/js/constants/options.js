@@ -1,5 +1,5 @@
 import WalletConnectProvider from "@walletconnect/web3-provider";
-import Fortmatic from "fortmatic";
+import Fortmatic from "@walletconnect/web3-provider"";
 
 export const PROVIDER_OPTIONS= {
     walletconnect: {

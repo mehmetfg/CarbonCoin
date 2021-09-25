@@ -1,4 +1,10 @@
 <!-- Name Field -->
+
+<div class="mb-3 m-form__group col-md-6">
+    {!! Form::label('dealer_id', __('models/traders.fields.dealer_id').':', ['class' => 'form-label']) !!}
+    {!! Form::select('dealer_id', $dealerItems, null, ['class' => 'form-select']) !!}
+</div>
+
 <div class="mb-3 m-form__group col-md-6">
     {!! Form::label('name', __('models/tokens.fields.name').':', ['class' => 'form-label']) !!}
     {!! Form::text('name', null, ['class' => 'form-control']) !!}
@@ -26,20 +32,6 @@
 </div>
 
 
-<!-- Definition Field -->
-<div class="mb-3 m-form__group col-md-6">
-    {!! Form::label('definition', __('models/tokens.fields.definition').':', ['class' => 'form-label']) !!}
-    {!! Form::text('definition', null, ['class' => 'form-control']) !!}
-</div>
-
-
-<!-- Description Field -->
-<div class="mb-3 m-form__group">
-    {!! Form::label('description', __('models/tokens.fields.description').':', ['class' => 'form-label']) !!}
-    {!! Form::textarea('description', null, ['class' => 'form-control']) !!}
-</div>
-
-
 <!-- Owner Address Field -->
 <div class="mb-3 m-form__group col-md-6">
     {!! Form::label('owner_address', __('models/tokens.fields.owner_address').':', ['class' => 'form-label']) !!}
@@ -54,6 +46,34 @@
 </div>
 
 
+<!-- Usd Price Field -->
+<div class="mb-3 m-form__group col-md-6">
+    {!! Form::label('usd_price', __('models/tokens.fields.usd_price').':', ['class' => 'form-label']) !!}
+    {!! Form::text('usd_price', null, ['class' => 'form-control']) !!}
+</div>
+
+
+<!-- Description Field -->
+<div class="mb-3 m-form__group col-md-6">
+    {!! Form::label('description', __('models/tokens.fields.description').':', ['class' => 'form-label']) !!}
+    {!! Form::textarea('description', null, ['class' => 'form-control']) !!}
+</div>
+
+
+<!-- Main Abi Field -->
+<div class="mb-3 m-form__group col-md-6">
+    {!! Form::label('main_abi', __('models/tokens.fields.main_abi').':', ['class' => 'form-label']) !!}
+    {!! Form::textarea('main_abi', null, ['class' => 'form-control']) !!}
+</div>
+
+
+<!-- Sub Abi Field -->
+<div class="mb-3 m-form__group col-md-6">
+    {!! Form::label('sub_abi', __('models/tokens.fields.sub_abi').':', ['class' => 'form-label']) !!}
+    {!! Form::textarea('sub_abi', null, ['class' => 'form-control']) !!}
+</div>
+
+
 <!-- Status Field -->
 <div class="mb-3 m-form__group col-md-6">
     {!! Form::label('status', __('models/tokens.fields.status').':', ['class' => 'form-label']) !!}
@@ -64,7 +84,7 @@
 <!-- Is Active Field -->
 <div class="mb-3 m-form__group col-md-6">
     {!! Form::label('is_active', __('models/tokens.fields.is_active').':', ['class' => 'form-label']) !!}
-    {!! Form::select('is_active', ['1' => 'Aktif', '0' => 'Pasif'], null, ['class' => 'form-select']) !!}
+    {!! Form::select('is_active', ['Aktif' => '1', 'Pasif' => '0'], null, ['class' => 'form-select']) !!}
 </div>
 
 <!-- Submit Field -->

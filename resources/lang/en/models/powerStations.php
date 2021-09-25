@@ -3,7 +3,7 @@
 return array (
   'singular' => 'PowerStation',
   'plural' => 'PowerStations',
-  'fields' => 
+  'fields' =>
   array (
     'id' => 'Id',
     'dealer_id' => 'Dealer Id',
@@ -15,7 +15,7 @@ return array (
     'city' => 'City',
     'address' => 'Address',
     'web' => 'Web',
-    ' installed_power' => ' Installed Power',
+    'installed_power' => ' Installed Power',
     'tax_number' => 'Tax Number',
     'authorized' => 'Authorized',
     'paid_date' => 'Paid Date',

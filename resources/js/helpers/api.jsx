@@ -47,7 +47,7 @@ export async function initCyceBalanceForOwner(){
             (response) => {
 
                 result= (10000000-(parseInt(response.result))/1000000).toFixed(2)
-
+                console.log(result)
             },
             // Not: Burada hataları yakalamak önemlidir.
             // Bileşenimizde bug bulunmaması için, 'catch ()' bloğu yerine bulunan

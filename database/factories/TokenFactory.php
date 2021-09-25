@@ -22,20 +22,21 @@ class TokenFactory extends Factory
     public function definition()
     {
         return [
-            'dealer_id' => 2,
+            'dealer_id' => $this->faker->randomDigitNotNull,
         'name' => $this->faker->word,
         'symbol' => $this->faker->word,
         'total_supply' => $this->faker->randomDigitNotNull,
         'decimal' => $this->faker->randomDigitNotNull,
-        'definition' => $this->faker->word,
-        'description' => $this->faker->word,
         'owner_address' => $this->faker->word,
         'contract_address' => $this->faker->word,
+        'usd_price' => $this->faker->word,
+        'description' => $this->faker->word,
+        'main_abi' => $this->faker->word,
+        'sub_abi' => $this->faker->word,
         'status' => $this->faker->word,
-        'is_active' => $this->faker->boolean,
+        'is_active' => $this->faker->word,
         'created_at' => $this->faker->date('Y-m-d H:i:s'),
-        'updated_at' => $this->faker->date('Y-m-d H:i:s'),
-
+        'updated_at' => $this->faker->date('Y-m-d H:i:s')
         ];
     }
 }

@@ -58,6 +58,14 @@ class Dealer extends Model
             }
         });
     }
+    public function setPasswordAttribute($password)
+    {
+        $this->attributes['password'] = bcrypt($password);
+    }
+    public function token()
+    {
+        $this->hasOne(Token::class);
+    }
     public $fillable = [
         'dealer_id',
         'type',

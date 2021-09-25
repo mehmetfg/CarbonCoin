@@ -55,11 +55,10 @@
 
 
 <!-- Logo Field -->
-<div class="mb-3 row">
+<div class="mb-3 m-form__group col-md-6">
         {!! Form::label('logo', __('models/partners.fields.logo').':', ['class' => 'col-sm-3 col-form-label']) !!}
-        <div class="col-sm-9">
-            {!! Form::file('logo', ['class' => 'form-control']) !!}
-        </div>
+        {!! Form::file('logo', ['class' => 'form-control']) !!}
+
 </div>
 
 

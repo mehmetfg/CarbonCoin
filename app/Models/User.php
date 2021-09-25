@@ -17,7 +17,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 class User extends Authenticatable
 {
-    use SoftDeletes;
+
 
     use HasApiTokens;
     use HasFactory;
@@ -38,6 +38,10 @@ class User extends Authenticatable
     const PARTNER= 3;
     const CUSTOMER = 4;
 
+    public function dealer()
+    {
+        return$this->belongsTo(Dealer::class);
+    }
     public function vallets()
     {
         return $this->hasMany(Vallet::class);

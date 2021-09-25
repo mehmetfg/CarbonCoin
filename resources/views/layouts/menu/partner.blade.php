@@ -5,13 +5,10 @@
     </div>
 </li>
 
-<li class="sidebar-list">
-    <a class="sidebar-link sidebar-title {{ Request::is('vallets*') ? 'active' : '' }}" href="{{ route('partner.vallets.index') }}"><i data-feather="home"></i><span class="lan-3">@lang('models/vallets.plural')              </span></a>
-</li>
 
 
 
 <li class="sidebar-list">
-    <a class="sidebar-link sidebar-title {{ Request::is('transactions*') ? 'active' : '' }}" href="{{ route('transactions.index') }}"><i data-feather="home"></i><span class="lan-3">@lang('models/transactions.plural')              </span></a>
-</li>
+    <a class="sidebar-link sidebar-title {{ Request::is('powerStations*') ? 'active' : '' }}" href="{{ route('powerStations.index') }}"><i data-feather="home"></i><span class="lan-3">@lang('models/powerStations.plural')              </span></a>
 
+</li>

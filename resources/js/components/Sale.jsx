@@ -9,7 +9,7 @@ import {getExchangeEth, initGasPrice} from "../helpers/api";
 import {PROVIDER_OPTIONS, GAS_LIMIT, DENOMINATIONS} from "../constants/options";
 import Swal from "sweetalert2";
 import {getCYCEContract,callBalanceOf} from "../helpers/web3";
-import {watchTokenTransfers} from "../helpers/watcher";
+
 import {LANGUAGE} from "../constants/language";
 
 const INITIAL_STATE = {
@@ -25,11 +25,12 @@ const INITIAL_STATE = {
     showModal: false,
     pendingRequest: false,
     result: null,
-    price: 0,
+    price: '',
     balance: 0,
     gasPrice: {},
     ethExchange: [],
-    cyce: 0,
+    ethToUsd:0,
+    cyce: '',
     cyceBalance:0,
     transactionStatus:false,
     status:true,
@@ -114,7 +115,7 @@ export default class Sale extends Component {
                                                                     <a
                                                                         className={!this.state.transactionStatus ? ' btn btn-info' : ' hidden btn btn-info'}
                                                                     >
-                                                                        <i className="fa fa-check"></i> {this.state.language['İşleminiz onaylandı']}
+                                                                        <i className="fa fa-check"></i> {this.state.language['İşleminiz onaylandı.']}
                                                                     </a>
                                                                 </h1>
                                                             </li>
@@ -126,12 +127,12 @@ export default class Sale extends Component {
                                                                 </p>
 
                                                                 <div className="col-md-12 mb-3 d-flex">
-                                                                    <input className={"form-control"} type="text"
+                                                                    <input className={"form-control"} type="text" placeholder={this.state.language['Adınızı Giriniz..']}
                                                                            name={"name"}
                                                                            onChange={this.handleChange}
                                                                            disabled={!this.state.connected}
                                                                     ></input>
-                                                                    <input className={"form-control"} type="text"
+                                                                    <input className={"form-control"} type="text" placeholder={this.state.language['Mail Adresinizi Giriniz..']}
                                                                            name={"mail"}
                                                                            onChange={this.handleChange}
                                                                            disabled={!this.state.connected}
@@ -250,7 +251,7 @@ export default class Sale extends Component {
                                     </div>
                                 </div>
 
-                                <TransferWidget ethExchange={this.state.ethExchange}
+                                <TransferWidget ethExchange={this.state.ethToUsd}
                                                 language={this.state.language}> </TransferWidget>
                             </div>
                         </div>
@@ -303,8 +304,9 @@ export default class Sale extends Component {
     }
 
     async waitForReceipt(hash) {
+        const {web3}=this.state
         let _this = this
-
+        var sonuc= await web3.eth.getTransactionReceipt(hash)
         if (this.state.status) {
             this.setState({transactionStatus: true})
             window.setTimeout(function () {
@@ -351,18 +353,17 @@ export default class Sale extends Component {
             console.log(ethGwei)
             netEth = (parseFloat(balance) - ethGwei)
 
-
             ethResult = exchangeRate * netEth
             console.log(ethResult)
             if (ethResult > 0) {
-                Swal.fire({
+               /* Swal.fire({
                     title: ethResult.toFixed(2),
                     html: this.state.language['Transfer Maliyeti Düştükten Sonra Alacağınız toplam CYCE miktarı'],
                     icon: 'success',
                     showConfirmButton: false,
                     timer: 2000
 
-                })
+                })*/
             } else {
 
                 Swal.fire({
@@ -376,7 +377,7 @@ export default class Sale extends Component {
         } else {
             netEth = parseFloat(price)
             ethResult = exchangeRate * netEth
-            Swal.fire({
+            /*Swal.fire({
                     title: ethResult.toFixed(2),
                     html: this.state.language['Alacağınız toplam CYCE miktarı'],
                     icon: 'success',
@@ -384,12 +385,11 @@ export default class Sale extends Component {
                     timer: 2000
 
                 }
-            )
+            )*/
         }
 
-
         try {
-
+            this.setState({status: true})
             const wei = web3.utils.toWei(netEth.toString(), 'ether')
             const contract = getCYCEContract(web3, 2)
             contract.methods.buyToken().send({
@@ -404,7 +404,7 @@ export default class Sale extends Component {
             }).on('error', function (error) {
                 _this.addTransaction('hata', 5);
             });
-            watchTokenTransfers(address, wei);
+
         } catch (error) {
             console.log(error)
         }
@@ -537,7 +537,8 @@ export default class Sale extends Component {
 
     async getExchangeEth() {
         const ex = await getExchangeEth('USD')
-        this.setState({ethExchange: ex})
+
+        this.setState({ethExchange: ex/1.1, ethToUsd:ex})
     }
 
     async getGasPrice() {
@@ -546,49 +547,34 @@ export default class Sale extends Component {
         this.setState({gasPrice: gas})
     }
 
-    async getLocalication() {
-        var result
-        await fetch("https://ipinfo.io")
-            .then(res => res.json())
-            .then(
-                (response) => {
 
-                    result = response
 
-                },
-                // Not: Burada hataları yakalamak önemlidir.
-                // Bileşenimizde bug bulunmaması için, 'catch ()' bloğu yerine bulunan
-                // bu blok içinde hatalar yakalanır.
-                (error) => {
-                    console.log(error)
-                }
-            )
+    addToken = async () => {
 
-        return result
-    }
-
-    addToken = () => {
-        try {
-            // wasAdded is a boolean. Like any RPC method, an error may be thrown.
-            const wasAdded = window.ethereum.request({
-                method: 'metamask_watchAsset',
+            const provider = window.web3.currentProvider
+            provider.sendAsync({
+                method: 'wallet_watchAsset',
                 params: {
-                    type: 'ERC20', // Initially only supports ERC20, but eventually more!
-                    options: {
+                    "type": "ERC20",
+                    "options": {
                         ...CYCE_CONTRACT["1"]
                     },
                 },
-            });
+                id: Math.round(Math.random() * 100000),
+            }, (err, added) => {
+                console.log('provider returned', err, added)
+                if (err || 'error' in added) {
+                    Swal.fire("Başarısız", err, "error")
+                    return
+                }
+              /*  if(added.result) {
+                    Swal.fire("Başarılı ", "CYCE Coin Cüzdana Ekleme İşleminiz Başarılı<br/> CYCE Bakiyeniz <br/>"+this.state.cyceBalance, "success")
+                }else{
+                    Swal.fire("Başarısız", "CYCE Coin Vazgeçtiniz", "error")
+                }*/
+            })
 
-            if (wasAdded) {
 
-                console.log('Thanks for your interest!');
-            } else {
-                console.log('Your loss!');
-            }
-        } catch (error) {
-            console.log(error);
-        }
     }
 
     addTransaction(hash, type) {

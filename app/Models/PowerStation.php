@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Scopes\PowerStationScope;
 use App\Traits\BelongsToTenant;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -41,6 +42,7 @@ class PowerStation extends Model
     use HasFactory;
     use LogsActivity;
 
+
     public $table = 'power_stations';
 
     protected $dates = ['deleted_at'];
@@ -52,6 +54,7 @@ class PowerStation extends Model
 
 
     public $fillable = [
+        'wallet_address',
         'dealer_id',
         'partner_id',
         'vallet_id',
@@ -111,7 +114,7 @@ class PowerStation extends Model
      */
     public static $rules = [
         'installed_power' => 'required',
-
+        "paid_date"=> 'required',
         'email' => 'required',
         'web' => 'required',
         'status' => 'required',

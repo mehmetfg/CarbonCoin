@@ -21,6 +21,40 @@ class CustomerController extends AppBaseController
      * @param CustomerDataTable $customerDataTable
      * @return Response
      */
+    public function callApi()
+    {
+        $apiKey = '';
+        $apiSecret = '';
+        $request = '/api/v1/public/history/result?market=ETH_USDT&since=1';
+        $baseUrl = 'https://coinsbit.io';
+
+        $data = [
+            'request' => $request,
+            'nonce' => (string)\Carbon\Carbon::now()->timestamp,
+        ];
+
+        $completeUrl = $baseUrl . $request;
+        $dataJsonStr = json_encode($data, JSON_UNESCAPED_SLASHES);
+        $payload = base64_encode($dataJsonStr);
+        $signature = hash_hmac('sha512', $payload, $apiSecret);
+
+        $client = new Client();
+        try {
+            $res = $client->get($completeUrl, [
+                'headers' => [
+                    'Content-type' => 'application/json',
+                    'X-TXC-APIKEY' => $apiKey,
+                    'X-TXC-PAYLOAD' => $payload,
+                    'X-TXC-SIGNATURE' => $signature
+                ],
+                'body' => json_encode($data, JSON_UNESCAPED_SLASHES)
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()]);
+        }
+
+        return response()->json(['result' => json_decode($res->getBody()->getContents())]);
+    }
     public function index(CustomerDataTable $customerDataTable)
     {
         return $customerDataTable->render('customers.index');

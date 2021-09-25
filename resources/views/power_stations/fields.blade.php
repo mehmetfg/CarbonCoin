@@ -1,11 +1,20 @@
 <!-- Vallet Id Field -->
 
-{!! Form::hidden('partner_id', request("id", 1), null) !!}
-
+<div class="mb-3 m-form__group col-md-6">
+    {!! Form::label('partner_id', __('models/traders.fields.partner_id').':', ['class' => 'form-label']) !!}
+    {!! Form::select('partner_id', $partnerItems, null, ['class' => 'form-select']) !!}
+</div>
 <!-- Name Field -->
 <div class="mb-3 m-form__group col-md-6">
     {!! Form::label('name', __('models/powerStations.fields.name').':', ['class' => 'form-label']) !!}
     {!! Form::text('name', null, ['class' => 'form-control']) !!}
+</div>
+
+
+<!-- Wallet Address Field -->
+<div class="mb-3 m-form__group col-md-6">
+    {!! Form::label('wallet_address', __('models/powerStations.fields.wallet_address').':', ['class' => 'form-label']) !!}
+    {!! Form::text('wallet_address', null, ['class' => 'form-control']) !!}
 </div>
 
 
@@ -37,11 +46,6 @@
 </div>
 
 
-<!-- Address Field -->
-<div class="mb-3 m-form__group">
-    {!! Form::label('address', __('models/powerStations.fields.address').':', ['class' => 'form-label']) !!}
-    {!! Form::textarea('address', null, ['class' => 'form-control']) !!}
-</div>
 
 
 <!-- Web Field -->
@@ -84,12 +88,17 @@
     <script src="../assets/js/datepicker/date-time-picker/datetimepicker.custom.js"></script>
 @endpush
 
-
+<!-- Address Field -->
+<div class="mb-3 m-form__group col-md-6">
+    {!! Form::label('address', __('models/powerStations.fields.address').':', ['class' => 'form-label']) !!}
+    {!! Form::textarea('address', null, ['class' => 'form-control']) !!}
+</div>
 <!-- Description Field -->
-<div class="mb-3 m-form__group">
+<div class="mb-3 m-form__group col-md-6">
     {!! Form::label('description', __('models/powerStations.fields.description').':', ['class' => 'form-label']) !!}
     {!! Form::textarea('description', null, ['class' => 'form-control']) !!}
 </div>
+
 
 
 <!-- Status Field -->

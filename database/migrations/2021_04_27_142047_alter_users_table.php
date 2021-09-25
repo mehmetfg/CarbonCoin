@@ -15,6 +15,7 @@ class AlterUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
+
             $table->integer('dealer_id');
             $table->integer('type');
             $table->string('phone')->nullable();
@@ -28,6 +29,8 @@ class AlterUsersTable extends Migration
             $table->integer('status')->nullable();;
             $table->string('language')->nullable();;
             $table->boolean('is_active')->nullable();;
+            $table->foreignId('current_team_id')->nullable();
+            $table->text('profile_photo_path')->nullable();
             $table->softDeletes();
         });
     }

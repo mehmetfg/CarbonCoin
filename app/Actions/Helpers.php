@@ -29,13 +29,29 @@ function set_site_data(){
 
 
 }
+
+function local_price_format($number){
+
+   return is_numeric($number) ? number_format(round($number, 3), 3, ",",".") : 0;
+}
+function upload($path, $model=""){
+
+
+    if (request()->has("$path")) {
+        request()->file("$path")->store("public/upload/$path");
+        $filename = request()->file("$path")->hashName();
+        return "/storage/upload/$path/" . $filename;
+    } else {
+        return  optional($model)->$path;
+    }
+}
 function get_user_dealer_ids(){
 
 
-    if(auth_user()->isDealer() || auth_user()->isPartner() ){
+    if(optional(auth_user())->isDealer() || optional(auth_user())->isPartner() ){
         return  [auth_user()->id, auth_user()->dealer_id];
     }
-    return [auth_user()->dealer_id, optional(auth_user()->dealer)->dealer_id];
+    return [optional(auth_user())->dealer_id, optional(optional(auth_user())->dealer)->dealer_id];
 }
 function get_user_dealer_id(){
 
@@ -43,6 +59,13 @@ function get_user_dealer_id(){
         return  auth_user()->id;
     }
     return auth_user()->dealer_id;
+}
+function get_user_dealer(){
+
+    if(auth_user()->isDealer() || auth_user()->isPartner() ){
+        return  auth_user();
+    }
+    return auth_user();
 }
 function auth_user(){
 

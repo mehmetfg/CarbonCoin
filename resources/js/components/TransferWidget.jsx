@@ -100,7 +100,7 @@ export default class TransferWidget extends Component{
                                                                     </svg>
                                                                 </div>
                                                                 <div className="media-body"><span className="m-0">{this.props.language['CYCE Fiyatı']}</span>
-                                                                    <h5 className="mb-0 counter">1 CYCE = 1USD</h5>
+                                                                    <h5 className="mb-0 counter">1 CYCE = 1.1 USD</h5>
                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                                                                          stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
                                                                          className="feather feather-user-plus icon-bg">
@@ -129,7 +129,7 @@ export default class TransferWidget extends Component{
                                                                     </svg>
                                                                 </div>
                                                                 <div className="media-body"><span className="m-0">{this.props.language['Satılan CYCE Miktarı']}</span>
-                                                                    <h5 className="mb-0 counter">{(2535178+10000+parseFloat(this.state.tokenOwner)).toString()} CYCE</h5>
+                                                                    <h5 className="mb-0 counter">7.567.726 CYCE</h5>
                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                                                                          stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
                                                                          className="feather feather-shopping-bag icon-bg">
@@ -175,7 +175,7 @@ export default class TransferWidget extends Component{
                             <ul className="col-xl-12">
                                 <li>
                                     <div className="goal-detail">
-                                        <h6><span className="font-primary">{this.props.language['Satılan Miktar :']} {(2535178+10000+parseFloat(this.state.tokenOwner)).toString()}</span> CYCE
+                                        <h6><span className="font-primary">{this.props.language['Satılan Miktar :']} 7.567.726</span> CYCE
                                         </h6>
                                         <div className="progress sm-progress-bar progress-animate">
                                             <div className="progress-gradient-primary" role="progressbar"
@@ -208,7 +208,7 @@ export default class TransferWidget extends Component{
     }
 
     componentDidMount() {
-        this.getExchange();
+        //this.getExchange();
     }
   async  getExchange(){
 

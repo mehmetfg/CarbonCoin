@@ -9,7 +9,7 @@
         <div class="row g-2">
             <div class="col-md-12">
                 @include('adminlte-templates::common.errors')
-                {!! Form::model($powerStation, ['route' => ['powerStations.update', $powerStation->id], 'method' => 'patch']) !!}
+                {!! Form::model($powerStation, ['route' => ['powerStations.update', $powerStation->id], 'method' => 'patch', 'files' => true]) !!}
                 <div class="row">
                     @include('power_stations.fields')
                 </div>

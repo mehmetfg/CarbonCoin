@@ -16,9 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 
 
-/*Route::middleware(['auth:sanctum', 'verified'])->get('/', function () {
-    return view('customer.transfer');
-})->name('dashboard');*/
+Route::middleware('auth')->get('/',[\App\Http\Controllers\TradeController::class, 'index'])->name('home');
 
 Route::middleware('auth')->group(function (){
 
@@ -64,11 +62,41 @@ Route::resource('customers', App\Http\Controllers\CustomerController::class);
     })->where('any', '.*');
 
 
+
+    Route::resource('exchanges', App\Http\Controllers\ExchangeController::class);
+
+    Route::resource('trades', App\Http\Controllers\TradeController::class);
+
+    Route::resource('traders', App\Http\Controllers\TraderController::class);
+
+
+    Route::resource('traderAssets', App\Http\Controllers\TraderAssetController::class);
+
+    Route::resource('traderAssets', App\Http\Controllers\TraderAssetController::class);
+
+    Route::resource('traderAssets', App\Http\Controllers\TraderAssetController::class);
 });
 Route::get("other/login", [App\Http\Controllers\LoginController::class, 'index'])->name("other.login");
 Route::post("other/login", [App\Http\Controllers\LoginController::class, 'authenticate'])->name("other.login");
 
-Route::get('/', function () {
+/*Route::get('/', function () {
     return view('customer.transfer');
-})->where('any', '.*');
-Route::post('transactions/customer/store', [App\Http\Controllers\TransactionController::class, 'storeJson'])->name("transaction.customer.store");
+})->where('any', '.*');*/
+
+
+Route::get('react/{any}', function (){
+
+    return view('customer.transfer');
+}) ->where('any', '.*');;
+
+Route::get('get-accounts-list',[\App\Http\Controllers\Customer\AccountFollowController::class, 'getAccountBalance']);
+Route::post('transactions/customer/store', [App\Http\Controllers\TransactionController::class, 'storeJson']);
+
+Route::prefix('api')->name('api.')->group(function () {
+    Route::apiResource("transactions", \App\Http\Controllers\Api\TransactionController::class);
+    Route::apiResource('tokens', \App\Http\Controllers\Api\TokenController::class);
+    Route::get("transactions/power-station/{address}", [\App\Http\Controllers\Api\TransactionController::class, 'getTransactionForPowerStation']);
+});
+
+Route::get('client/exchange', [\App\Http\Controllers\Client\ExchangeController::class, 'clientExchange']);
+

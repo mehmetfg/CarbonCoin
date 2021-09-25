@@ -2,6 +2,7 @@ import {CYCE_CONTRACT} from "../constants/contract";
 
 
 export function getCYCEContract(web3, chainId) {
+
     const cyce = new web3.eth.Contract(
         CYCE_CONTRACT[chainId].abi,
         CYCE_CONTRACT[chainId].address

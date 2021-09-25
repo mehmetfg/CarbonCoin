@@ -2,28 +2,27 @@
 
 namespace App\Models;
 
-use App\Scopes\SortByIdDesc;
-use App\Traits\BelongsToTenant;
 use App\Traits\SortNameInDescOrder;
-use Illuminate\Database\Eloquent\Model;
+use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
  * Class Token
  * @package App\Models
- * @version April 27, 2021, 3:04 pm UTC
+ * @version September 18, 2021, 4:07 pm +03
  * @Owner Mehmet Fatih GÖÇGÜN
  * @property integer $dealer_id
  * @property string $name
  * @property string $symbol
  * @property integer $total_supply
  * @property integer $decimal
- * @property string $definition
- * @property string $description
  * @property string $owner_address
  * @property string $contract_address
+ * @property string $usd_price
+ * @property string $description
+ * @property string $main_abi
+ * @property string $sub_abi
  * @property string $status
  * @property boolean $is_active
  */
@@ -31,10 +30,9 @@ use Spatie\Activitylog\Traits\LogsActivity;
 class Token extends Model
 {
     use SoftDeletes;
-    use BelongsToTenant;
-    use HasFactory;
     use SortNameInDescOrder;
-    use LogsActivity;
+    use HasFactory;
+
     public $table = 'tokens';
 
 
@@ -48,10 +46,12 @@ class Token extends Model
         'symbol',
         'total_supply',
         'decimal',
-        'definition',
-        'description',
         'owner_address',
         'contract_address',
+        'usd_price',
+        'description',
+        'main_abi',
+        'sub_abi',
         'status',
         'is_active'
     ];
@@ -68,10 +68,12 @@ class Token extends Model
         'symbol' => 'string',
         'total_supply' => 'integer',
         'decimal' => 'integer',
-        'definition' => 'string',
-        'description' => 'string',
         'owner_address' => 'string',
         'contract_address' => 'string',
+        'usd_price' => 'string',
+        'description' => 'string',
+        'main_abi' => 'array',
+        'sub_abi' => 'array',
         'status' => 'string',
         'is_active' => 'boolean'
     ];

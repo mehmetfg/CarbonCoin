@@ -3,6 +3,7 @@
 namespace App\DataTables;
 
 use App\Models\PowerStation;
+use App\Models\Token;
 use Yajra\DataTables\Services\DataTable;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Column;
@@ -15,11 +16,58 @@ class PowerStationDataTable extends DataTable
      * @param mixed $query Results from query() method.
      * @return \Yajra\DataTables\DataTableAbstract
      */
+
+    function docControl($value){
+        if($value!=null) {
+            return '<i class="fa fa-check"></i>';
+        }
+        else{
+            return "<i class='fa fa-ban'></i>";
+        }
+
+    }
     public function dataTable($query)
     {
-        $dataTable = new EloquentDataTable($query);
+        $link="";
 
-        return $dataTable->addColumn('action', 'power_stations.datatables_actions');
+        $dataTable = new EloquentDataTable($query);
+        return $dataTable
+            ->addColumn('action', 'power_stations.datatables_actions')
+            ->addColumn('test', function ($item) {
+                if(auth_user()->isPartner()){
+                    $link="transfer-view";
+                }else{
+                    $link="transfer-list";
+                }
+                $vallet=Token::select("id")->where("dealer_id", get_user_dealer_id())->first();
+                return    "<a href='/react/$link/$vallet->id/$item->wallet_address' class='btn btn-primary'>
+                Transfer
+            </a>";
+            })
+            ->editColumn('paid_date', function ($request) {
+            return $request->paid_date->toDateString();
+            })->editColumn('status', function ($request) {
+            if($request->status=="1") {
+                return 'Onayladı';
+            }elseif($request->status=="2"){
+                return 'Bekelemede';
+            }else{
+                return 'Reddedildi';
+            }
+        })->editColumn('doc1', function ($request) {
+           return $this->docControl($request->doc1);
+        })->editColumn('doc2', function ($request) {
+           return $this->docControl($request->doc2);
+        })->editColumn('doc3', function ($request) {
+            return $this->docControl($request->doc3);
+        })->editColumn('doc4', function ($request) {
+           return $this->docControl($request->doc4);
+        })
+            ->rawColumns(['doc1', 'doc2', 'doc3', 'doc4', 'action', 'test']);
+
+
+
+
     }
 
     /**
@@ -90,11 +138,12 @@ class PowerStationDataTable extends DataTable
             'authorized' => new Column(['title' => __('models/powerStations.fields.authorized'), 'data' => 'authorized','searchable' => false]),
             'paid_date' => new Column(['title' => __('models/powerStations.fields.paid_date'), 'data' => 'paid_date','searchable' => false]),
             'status' => new Column(['title' => __('models/powerStations.fields.status'), 'data' => 'status','searchable' => false]),
-            'is_active' => new Column(['title' => __('models/powerStations.fields.is_active'), 'data' => 'is_active','searchable' => false]),
+            //'is_active' => new Column(['title' => __('models/powerStations.fields.is_active'), 'data' => 'is_active','searchable' => false]),
             'doc1' => new Column(['title' => __('models/powerStations.fields.doc1'), 'data' => 'doc1','searchable' => false]),
             'doc2' => new Column(['title' => __('models/powerStations.fields.doc2'), 'data' => 'doc2','searchable' => false]),
             'doc3' => new Column(['title' => __('models/powerStations.fields.doc3'), 'data' => 'doc3','searchable' => false]),
-            'doc4' => new Column(['title' => __('models/powerStations.fields.doc4'), 'data' => 'doc4','searchable' => false])
+            'doc4' => new Column(['title' => __('models/powerStations.fields.doc4'), 'data' => 'doc4','searchable' => false]),
+             'test' => new Column(['title' => 'Test', 'data' => 'test','searchable' => false])
         ];
     }
 

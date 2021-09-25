@@ -16,7 +16,7 @@
     </a>
     {!! Form::button('<i class="fa  fa-trash"></i>', [
         'type' => 'submit',
-        'class' => ' btn-info btn-xs',
+        'class' => ' btn-info btn-sm',
         'onclick' => 'return confirm("'.__('crud.are_you_sure').'")'
     ]) !!}
     {!! Form::close() !!}

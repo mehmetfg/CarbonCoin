@@ -19,20 +19,6 @@
 </div>
 
 
-<!-- Definition Field -->
-<div class="form-group">
-    {!! Form::label('definition', __('models/tokens.fields.definition').':', ['class' => 'form-label']) !!}
-    <p>{{ $token->definition }}</p>
-</div>
-
-
-<!-- Description Field -->
-<div class="form-group">
-    {!! Form::label('description', __('models/tokens.fields.description').':', ['class' => 'form-label']) !!}
-    <p>{{ $token->description }}</p>
-</div>
-
-
 <!-- Owner Address Field -->
 <div class="form-group">
     {!! Form::label('owner_address', __('models/tokens.fields.owner_address').':', ['class' => 'form-label']) !!}
@@ -44,6 +30,34 @@
 <div class="form-group">
     {!! Form::label('contract_address', __('models/tokens.fields.contract_address').':', ['class' => 'form-label']) !!}
     <p>{{ $token->contract_address }}</p>
+</div>
+
+
+<!-- Usd Price Field -->
+<div class="form-group">
+    {!! Form::label('usd_price', __('models/tokens.fields.usd_price').':', ['class' => 'form-label']) !!}
+    <p>{{ $token->usd_price }}</p>
+</div>
+
+
+<!-- Description Field -->
+<div class="form-group">
+    {!! Form::label('description', __('models/tokens.fields.description').':', ['class' => 'form-label']) !!}
+    <p>{{ $token->description }}</p>
+</div>
+
+
+<!-- Main Abi Field -->
+<div class="form-group">
+    {!! Form::label('main_abi', __('models/tokens.fields.main_abi').':', ['class' => 'form-label']) !!}
+    <p>{{ $token->main_abi }}</p>
+</div>
+
+
+<!-- Sub Abi Field -->
+<div class="form-group">
+    {!! Form::label('sub_abi', __('models/tokens.fields.sub_abi').':', ['class' => 'form-label']) !!}
+    <p>{{ $token->sub_abi }}</p>
 </div>
 
 

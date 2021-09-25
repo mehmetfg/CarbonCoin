@@ -7,7 +7,10 @@ use App\Http\Requests;
 use App\Http\Requests\CreatePowerStationRequest;
 use App\Http\Requests\UpdatePowerStationRequest;
 use App\Models\PowerStation;
+use App\Models\Token;
+use App\Models\Transaction;
 use App\Models\Vallet;
+use Carbon\Carbon;
 use Flash;
 use App\Http\Controllers\AppBaseController;
 use Response;
@@ -23,6 +26,7 @@ class PowerStationController extends AppBaseController
     public function index(PowerStationDataTable $powerStationDataTable)
     {
 
+
         return $powerStationDataTable->render('power_stations.index');
     }
 
@@ -34,13 +38,6 @@ class PowerStationController extends AppBaseController
     public function create()
     {
 
-        $vallet=Vallet::where("user_id",request("id"))->first();
-
-        if(is_null($vallet))
-        {
-            Flash::error("Önce Firmaya Cüzdan Ekleyiniz");
-            return  back();
-        }
         return view('power_stations.create');
     }
 
@@ -56,7 +53,7 @@ class PowerStationController extends AppBaseController
         $input =
 
         /** @var PowerStation $powerStation */
-        $vallet=Vallet::where("user_id", $request->partner_id)->first();
+/*        $vallet=Vallet::where("user_id", $request->partner_id)->first();
 
         $valletId=Vallet::create([
             "user_id" => $request->partner_id,
@@ -65,13 +62,34 @@ class PowerStationController extends AppBaseController
             "public_key" => '',
             "private_key" => '',
             "id_card_number" => 1
-        ])->id;
+        ])->id;*/
 
 
-        $input=  array_merge($request->all(), ["vallet_id"=> $valletId]);
 
+        $input = array_merge($request->all(),
+            [
+                "vallet_id" => 1,
+                "doc1"      => upload("doc1"),
+                "doc2"      => upload("doc2"),
+                "doc3"      => upload("doc3"),
+                "doc4"      => upload("doc4"),
+            ]);
         $powerStation = PowerStation::create($input);
+        $power= intval($request->installed_power);
+        $value=$power/20;
+        for($i=0;  $i<20 ; $i++){
+            $month= $i*3;
+            Transaction::create([
+                "period" => $i+1,
+                "status" => 0,
+                "date"  => Carbon::parse($request->paid_date)->addMonth($month),
+               "type"  => 5,
+                "definition" => "power station",
+                "quentity"  => $value,
+                "address" => $request->wallet_address
+            ]);
 
+        }
         Flash::success(__('messages.saved', ['model' => __('models/powerStations.singular')]));
 
         return redirect(route('powerStations.index'));
@@ -88,14 +106,15 @@ class PowerStationController extends AppBaseController
     {
         /** @var PowerStation $powerStation */
         $powerStation = PowerStation::find($id);
-
+         $token=Token::first();
         if (empty($powerStation)) {
             Flash::error(__('models/powerStations.singular').' '.__('messages.not_found'));
 
             return redirect(route('powerStations.index'));
         }
 
-        return view('power_stations.show')->with('powerStation', $powerStation);
+        return view('power_stations.show')->with('powerStation', $powerStation)
+            ->with("token", $token);
     }
 
     /**
@@ -138,7 +157,27 @@ class PowerStationController extends AppBaseController
             return redirect(route('powerStations.index'));
         }
 
-        $powerStation->fill($request->all());
+
+
+        $power= intval($request->installed_power);
+        $value=$power/20;
+        for($i=0;  $i<20 ; $i++){
+            Transaction::where("address",$request->address)->update([
+                "quentity"  => $value,
+                "address" => $request->wallet_address,
+                "period" => $i+1
+            ]);
+
+        }
+        $input = array_merge($request->all(),
+            [
+                "vallet_id" => 1,
+                "doc1"      => upload("doc1"),
+                "doc2"      => upload("doc2"),
+                "doc3"      => upload("doc3"),
+                "doc4"      => upload("doc4"),
+            ]);
+        $powerStation->fill($input);
         $powerStation->save();
 
         Flash::success(__('messages.updated', ['model' => __('models/powerStations.singular')]));

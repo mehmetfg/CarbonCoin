@@ -4,7 +4,7 @@
 * Date: 10.04.2021
 * Time: 17:00
 */--}}
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <?php
@@ -35,8 +35,8 @@
     <!-- Plugins css start-->
     <link rel="stylesheet" type="text/css" href="/assets/css/vendors/scrollbar.css">
 
-
-    <!-- Plugins css Ends-->
+    @stack("css")
+<!-- Plugins css Ends-->
     <!-- Bootstrap css-->
     <link rel="stylesheet" type="text/css" href="/assets/css/vendors/bootstrap.css">
     <!-- App css-->
@@ -44,13 +44,12 @@
     <link id="color" rel="stylesheet" href="/assets/css/color-1.css" media="screen">
     <!-- Responsive css-->
     <link rel="stylesheet" type="text/css" href="/assets/css/responsive.css">
-
-        @if(Request::is('user/profile'))
-            <link rel="stylesheet" href="{{ mix('css/app.css') }}">
-        @endif
+    @if(Request::is('user/profile'))
+        <link rel="stylesheet" href="/css/app.css">
+    @endif
 
     @livewireStyles
-        @stack("css")
+    <script src="/js/app.js" defer></script>
 </head>
 <body>
 <!-- tap on top starts-->
@@ -77,17 +76,17 @@
             </div>
             <div class="left-header col horizontal-wrapper ps-0">
                 @if(auth_user()->vallet)
-                <ul class="horizontal-menu">
-                <li class="level-menu outside"><a class="nav-link" href="{{route("transaction.customer",["vallet"=> auth_user()->vallet->id ?? 0])}}"><i data-feather="inbox"></i><span>Gönder</span></a>
+                    <ul class="horizontal-menu">
+                        <li class="level-menu outside"><a class="nav-link" href="{{route("transaction.customer",["vallet"=> auth_user()->vallet->id ?? 0])}}"><i data-feather="inbox"></i><span>Gönder</span></a>
 
-                </li>
+                        </li>
 
-                </ul>
-                    @endif
+                    </ul>
+                @endif
             </div>
             <div class="nav-right col-8 pull-right right-header p-0">
                 <ul class="nav-menus">
-                 <!--   <li class="language-nav">
+                    <li class="language-nav">
                         <div class="translate_wrapper">
                             <div class="current_lang">
                                 <div class="lang"><i class="flag-icon flag-icon-us"></i><span class="lang-txt">EN                               </span></div>
@@ -104,27 +103,49 @@
                         </div>
                     </li>
 
+                    <li class="onhover-dropdown"></li>
+                    <div class="notification-box"><i data-feather="bell"> </i><span class="badge rounded-pill badge-secondary">4                                </span></div>
 
+                    <ul class="notification-dropdown onhover-show-div">
+                        <li><i data-feather="bell"></i>
+                            <h6 class="f-18 mb-0">Notitications</h6>
+                        </li>
+                        <li>
+                            <p><i class="fa fa-circle-o me-3 font-primary"> </i>Delivery processing <span class="pull-right">10 min.</span></p>
+                        </li>
+                        <li>
+                            <p><i class="fa fa-circle-o me-3 font-success"></i>Order Complete<span class="pull-right">1 hr</span></p>
+                        </li>
+                        <li>
+                            <p><i class="fa fa-circle-o me-3 font-info"></i>Tickets Generated<span class="pull-right">3 hr</span></p>
+                        </li>
+                        <li>
+                            <p><i class="fa fa-circle-o me-3 font-danger"></i>Delivery Complete<span class="pull-right">6 hr</span></p>
+                        </li>
+                        <li><a class="btn btn-primary">Check all notification</a></li>
+                    </ul>
 
+                    </li>
                     <li>
                         <div class="mode"><i class="fa  fa-moon-o"></i></div>
-                    </li> -->
-
+                    </li>
                     <li class="maximize"><a class="text-dark" href="#!" onclick="javascript:toggleFullScreen()"><i data-feather="maximize"></i></a></li>
                     <li class="profile-nav onhover-dropdown p-0 me-0">
-                        <div class="media profile-media"><img class="b-r-10" src="" alt="">
+                        <div class="media profile-media"><img class="b-r-10" src="/assets/images/dashboard-2/product-6.png" alt="">
                             <div class="media-body"><span>{{auth_user()->name}}</span>
                                 <p class="mb-0 font-roboto">Admin <i class="middle fa fa-angle-down"></i></p>
                             </div>
-                        </div>
+                        </div>  <form method="post" action="{{route("logout")}}">
+                            @csrf
                         <ul class="profile-dropdown onhover-show-div">
+
                             <li><a href="{{ route('profile.show') }}"><i data-feather="user"></i><span>Hesap </span></a></li>
-
-
-                            <li> <form action="{{route("logout")}}" method="post" >
-                                    @csrf<button type="submit" class="link " ><i data-feather="log-in"> </i><span>{{__("Log out")}}</span></button>
-                                </form></li>
+                         {{--   <li><a href="#"><i data-feather="mail"></i><span>Inbox</span></a></li>
+                            <li><a href="#"><i data-feather="file-text"></i><span>Taskboard</span></a></li>--}}
+                            <li><a href="{{ route('profile.show') }}"><i data-feather="settings"></i><span>Ayarlar</span></a></li>
+                            <li><button    class="btn-block   bg-white border-0"><i data-feather="log-in"> </i><span>Çıkış</span></button></li>
                         </ul>
+                        </form>
                     </li>
                 </ul>
             </div>
@@ -143,25 +164,22 @@
     <!-- Page Body Start-->
     <div class="page-body-wrapper">
         <!-- Page Sidebar Start-->
-      @include("layouts.sidebar")
-        <!-- Page Sidebar Ends-->
+    @include("layouts.sidebar")
+    <!-- Page Sidebar Ends-->
         <div class="page-body">
             <div class="container-fluid">
-                <div class="page-title text-center">
+                <div class="page-title">
                     <div class="row">
-                        <h1>
-                        <img src="/assets/images/logo.png" style="width: 100px;"></h1>
-                       <!-- <div class="col-6">
-                            <h5>Hoşgeldiniz {{auth_user()->name}}</h5><br>
-                            <a class="btn btn-danger" href="{{route("logout")}}"> <i class="fa fa-sign-out"> </i>Çıkış Yap</a>
+                        <div class="col-6">
+
                         </div>
                         <div class="col-6">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="/">                                       <i data-feather="home"></i></a></li>
-                                <li class="breadcrumb-item">CYCE</li>
-                                <li class="breadcrumb-item active">CYCE Alım Sayfası</li>
+                                <li class="breadcrumb-item"><a href="index.html">                                       <i data-feather="home"></i></a></li>
+                                <li class="breadcrumb-item">Pages</li>
+                                <li class="breadcrumb-item active">Sample Page</li>
                             </ol>
-                        </div> -->
+                        </div>
                     </div>
                 </div>
             </div>
@@ -170,86 +188,54 @@
                 <div class="col-sm-12">
 
                     @if(session("impersonate"))
-                    <div class="alert round-badge-primary"  role="alert">
-                        <div class="m-alert__text">
-                            <strong>
-                                Dikkat!
-                            </strong>
-                            Şu anda <span class="btn btn-danger-gradien btn-sm m-btn m-btn--pill m-btn--wide"> {{auth()->user()->name}}</span> Kullanıcısı ile giriş yaptınız
-                            <a class="btn btn-danger-gradien btn-sm m-btn m-btn--pill m-btn--wide pull-right" href="{{route("impersonate.leave")}}" >
-                                <i class="fa fa-reply"></i> Kullanıcıdan Ayrıl
-                            </a>
+                        <div class="alert round-badge-primary"  role="alert">
+                            <div class="m-alert__text">
+                                <strong>
+                                    Dikkat!
+                                </strong>
+                                Şu anda <span class="btn btn-danger-gradien btn-sm m-btn m-btn--pill m-btn--wide"> {{auth()->user()->name}}</span> Kullanıcısı ile giriş yaptınız
+                                <a class="btn btn-danger-gradien btn-sm m-btn m-btn--pill m-btn--wide pull-right" href="{{route("impersonate.leave")}}" >
+                                    <i class="fa fa-reply"></i> Kullanıcıdan Ayrıl
+                                </a>
+                            </div>
+
                         </div>
-
-                    </div>
                     @endif
-
+                        @stack("outside-content")
                     <div class="card">
                         @if(session("impersonate"))
 
                         @endif
+                        <div id="app">
 
-                @yield("content")
 
-
+                            @yield("content")
+                        </div>
                         @if(Request::is('user/profile'))
                             {{ $slot }}
-                            @endif
+                        @endif
 
-
+                    </div>
+                </div>
+                <!-- Container-fluid Ends-->
             </div>
-            <!-- Container-fluid Ends-->
-        </div>
 
-    </div>  <!-- footer start-->
+        </div>  <!-- footer start-->
         <footer class="footer">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-12 footer-copyright text-center">
-                        <p class="mb-0">Copyright 2021 © CYCE </p>
+                        <p class="mb-0">Copyright 2021 © Cuba theme by pixelstrap  </p>
                     </div>
                 </div>
             </div>
         </footer>
-        <style>
-            .page-wrapper .page-header .header-wrapper {
-               display:none;
-            }
-            .footer {
-                background-color: #fff;
-                -webkit-box-shadow: 0 0 20px rgb(89 102 122 / 10%);
-                box-shadow: 0 0 20px rgb(89 102 122 / 10%);
-                padding: 15px;
-                bottom: 0;
-                left: 0;
-            margin-left: 0px;
-                -webkit-transition: 0.5s;
-                transition: 0.5s;
-            }
-            .page-wrapper.compact-wrapper .page-body-wrapper .page-body {
-                min-height: calc(100vh - 80px);
-               margin-top: 0px;
-                 margin-left: 0px;
-            }
-            .card .card-header {
-                background-color: #fff;
-                padding: 20px;
-                border-bottom: 1px solid #ecf3fa;
-                border-top-left-radius: 15px;
-                border-top-right-radius: 15px;
-                position: relative;
-            }
-        </style>
-
-</div>
-
+    </div>
 </div>
 
 <!-- latest jquery-->
 @livewireScripts
-
-
-<script src="{{ mix('js/app.js') }}" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
 <script src="/assets/js/jquery-3.5.1.min.js"></script>
 <!-- Bootstrap js-->
 <script src="/assets/js/bootstrap/bootstrap.bundle.min.js"></script>
@@ -262,7 +248,7 @@
 <!-- Sidebar jquery-->
 <script src="/assets/js/config.js"></script>
 <script src="/js/custom.js"></script>
-    <!-- Theme js-->
+<!-- Theme js-->
 
 <!-- Plugins JS start-->
 
@@ -272,14 +258,8 @@
 <!-- login js-->
 <!-- Plugin used-->
 @stack("js")
-<script>
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-</script>
-<!--    <script src="../assets/js/theme-customizer/customizer.js"></script>-->
+
+<script src="../assets/js/theme-customizer/customizer.js"></script>
 </body>
 
 </html>
