@@ -41,7 +41,6 @@
 
                     </div>
 
-
                     <div class="knob-block text-center">
                         <div class="fa fa-2x fa-bar-chart  text-primary"></div>
                     </div>

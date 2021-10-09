@@ -92,10 +92,16 @@ Route::get('react/{any}', function (){
 Route::get('get-accounts-list',[\App\Http\Controllers\Customer\AccountFollowController::class, 'getAccountBalance']);
 Route::post('transactions/customer/store', [App\Http\Controllers\TransactionController::class, 'storeJson']);
 
+///Report
+Route::get('report/exchange-report', [\App\Http\Controllers\Report\ExchangeReportController::class, 'index'])->name("exchange.report");
 Route::prefix('api')->name('api.')->group(function () {
     Route::apiResource("transactions", \App\Http\Controllers\Api\TransactionController::class);
     Route::apiResource('tokens', \App\Http\Controllers\Api\TokenController::class);
     Route::get("transactions/power-station/{address}", [\App\Http\Controllers\Api\TransactionController::class, 'getTransactionForPowerStation']);
+
+
+
+
 });
 
 Route::get('client/exchange', [\App\Http\Controllers\Client\ExchangeController::class, 'clientExchange']);

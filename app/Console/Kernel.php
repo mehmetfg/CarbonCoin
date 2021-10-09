@@ -27,7 +27,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
          $schedule->command('exchange:report')->everyMinute();
-         $schedule->command('backup:run --only-files')->days(15);
+         $schedule->command('backup:run --only-files')->weekly();
     }
 
     /**

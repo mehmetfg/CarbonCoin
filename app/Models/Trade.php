@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\BelongsToTenant;
 use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -28,7 +29,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Trade extends Model
 {
     use SoftDeletes;
-
+    use BelongsToTenant;
     use HasFactory;
 
     public $table = 'trades';

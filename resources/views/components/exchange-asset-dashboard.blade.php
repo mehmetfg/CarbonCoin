@@ -39,7 +39,6 @@
                         <h4><i class="fa fa-lock"></i> {{number_format(round($data->where("asset_symbol", "USDT")->sum("locked_balance"),3),3)}}
                     </div>
 
-
                     <div class="knob-block text-center">
                         <div class="fa fa-2x fa-bar-chart  text-primary"></div>
                     </div>

@@ -16,18 +16,19 @@ use App\Scopes\SortByIdDesc;
 
 trait BelongsToTenant
 {
-    protected static function booted()
+    protected static function bootTenantable()
     {
 
-        static::addGlobalScope(new SortByIdDesc(new TenantScope()));
-        static::creating(function ($model)
-        {
-            if(! auth()->guest())
-            {
-                $model->dealer_id = get_user_dealer_id();
-            }
-        });
 
+        if (!app()->runningInConsole() && $user = auth()->user()) {
+            static::addGlobalScope(new SortByIdDesc(new TenantScope()));
+            static::creating(function ($model) {
+                if (!auth()->guest()) {
+                    $model->dealer_id = get_user_dealer_id();
+                }
+            });
+
+        }
     }
 
     public function dealer()

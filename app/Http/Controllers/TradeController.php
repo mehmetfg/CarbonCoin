@@ -25,9 +25,9 @@ class TradeController extends AppBaseController
      */
     public function index(TradeDataTable $tradeDataTable)
     {
-        $totalOutBid=Trade::select("side", "amount", "inserted_at", "taker_side")->where("side", "<>","SELF_TRADING")->get();
+        $totalOutBid=Trade::select("side", "amount", "inserted_at", "taker_side")->where("type", 2)->get();
 
-        $exchange= Exchange::first();
+
 
 
         $data=TraderAsset::latest()->take(4)->get();

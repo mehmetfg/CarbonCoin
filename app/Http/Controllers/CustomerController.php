@@ -10,6 +10,7 @@ use App\Models\Customer;
 use App\Models\User;
 use App\Models\Vallet;
 use Flash;
+use GuzzleHttp\Client;
 use App\Http\Controllers\AppBaseController;
 use Response;
 
@@ -25,7 +26,7 @@ class CustomerController extends AppBaseController
     {
         $apiKey = '';
         $apiSecret = '';
-        $request = '/api/v1/public/history/result?market=ETH_USDT&since=1';
+        $request = '/api/v1/public/history/result?market=CYCE_USDT&since=1';
         $baseUrl = 'https://coinsbit.io';
 
         $data = [
@@ -57,6 +58,37 @@ class CustomerController extends AppBaseController
     }
     public function index(CustomerDataTable $customerDataTable)
     {
+        $apiKey = '1cad0dc4d595041cb7e2b5c136c2011f';
+        $apiSecret = 'cb9db43d5ee9c0fd5fb838f72d87c76d';
+        $request = '/api/v1/public/history/result?market=CYCE_USDT&since=1';
+        $baseUrl = 'https://coinsbit.io';
+
+        $data = [
+            'request' => $request,
+            'nonce' => (string)\Carbon\Carbon::now()->timestamp,
+        ];
+
+        $completeUrl = $baseUrl . $request;
+        $dataJsonStr = json_encode($data, JSON_UNESCAPED_SLASHES);
+        $payload = base64_encode($dataJsonStr);
+        $signature = hash_hmac('sha512', $payload, $apiSecret);
+
+        $client = new Client();
+        try {
+            $res = $client->get($completeUrl, [
+                'headers' => [
+                    'Content-type' => 'application/json',
+                    'X-TXC-APIKEY' => $apiKey,
+                    'X-TXC-PAYLOAD' => $payload,
+                    'X-TXC-SIGNATURE' => $signature
+                ],
+                'body' => json_encode($data, JSON_UNESCAPED_SLASHES)
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()]);
+        }
+
+        return response()->json(['result' => json_decode($res->getBody()->getContents())]);
         return $customerDataTable->render('customers.index');
     }
 
